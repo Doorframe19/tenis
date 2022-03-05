@@ -17,7 +17,7 @@ Black=(0,0,0)
 ball = {
     'Width':10,
     'speedy':0.3,
-    'speedx':0.3,
+    'speedx':0.6,
     'positionx':400,
     'positiony':300,
     'radius':50,
@@ -60,10 +60,10 @@ def moveball(ball):
     ball['positiony']+=ball['speedy']
 
 def crash(player,ball):
-    if ball['positionx'] > player['positionx'] and ball['positionx']<player['positionx']+player['width']:
-        if ball['positiony'] > player['positiony'] and ball['positiony']<player['positiony']+player['height']:
-            return True        
-    return False
+    if ball['positionx'] > player['positionx'] and ball['positionx']<player['positionx']+player['width'] and  ball['positiony'] > player['positiony'] and ball['positiony']<player['positiony']+player['height']:
+        return True  
+    else:      
+        return False
 
 def randfloat(lower,upper):
     r = random.randrange(int(lower*100), int(upper*100))
@@ -102,19 +102,18 @@ while Keep_going == True:
                 if reachend(player1):
                     player1['positiony']-=10
 
-            if event.text == 'i':
-                player2['positiony']-=10
-                if reachend(player2):
-                    player2['positiony'] +=10
-                
-            elif event.text == 'k':
-                player2['positiony']+=10
-                if reachend(player2):
-                    player2['positiony']-=10
+   
+    
+    
         
 
                 
-                 
+    if ball['positiony']<player2['positiony']:
+        player2['positiony']-=20
+        print('alto')
+    elif ball['positiony']>player2['positiony']:
+        player2['positiony']+=20  
+        print('bajo')         
     Screen.fill(Black)
     updateracket(player1)
     updateracket(player2)
@@ -131,11 +130,12 @@ while Keep_going == True:
         ball['speedy']*=-1
         ball['speedy']*=randfloat(0.5,1.5)
         ball['speedx']*=randfloat(0.3,1.7)
+
         
         
     
     moveball(ball)
-    print(ball)
+    
     if ballbounce(ball):
         ball['speedy']*=-1
 
@@ -162,7 +162,7 @@ while Keep_going == True:
     if player1['score']>=3:
         pygame.draw.circle(Screen,White,(point3player1),50)
         
-
+    
     
     pygame.display.update()
 
